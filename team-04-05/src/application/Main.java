@@ -7,6 +7,7 @@ import model.AcademicProgram;
 import model.Course;
 import model.Faculty;
 import model.PersonalCharacteristic;
+import model.User;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ import dal.DbSqlite;
 import dal.FacultyDAOImpl;
 import dal.PersonalCharacteristicDAOImpl;
 import dal.AcademicCharacteristicDAOImpl;
+import dal.UserDAOImpl;
 
 public class Main extends Application {
 	@Override
@@ -43,7 +45,6 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 //		TODO:
-//		USER
 //		Integrate with new repo's main
 		
 		DbSqlite db = new DbSqlite("");
@@ -87,6 +88,12 @@ public class Main extends Application {
 			for (AcademicCharacteristic academicCharacteristic : SavedInDBAcademicCharacteristic) {
 				System.out.println(academicCharacteristic.toString());
 			}
+			
+//			testing User stuff
+			System.out.println("### User TEST ###");
+			UserDAOImpl userDAO = new UserDAOImpl(db.getConnection(), "user");
+			User user = userDAO.getUser();
+			System.out.println(user);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
