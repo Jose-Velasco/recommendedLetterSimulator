@@ -16,11 +16,18 @@ public class Course {
 		this.prefixNumber = new SimpleIntegerProperty(prefixNumber);
 	}
 	
+	public Course() {
+		this.courseId = -1;
+		this.name = new SimpleStringProperty();
+		this.prefix = new SimpleStringProperty();
+		this.prefixNumber = new SimpleIntegerProperty();
+	}
+	
 	public String getName() {
 		return name.get();
 	}
 	
-	public void seteName(String courseName) {
+	public void setName(String courseName) {
 		this.name.set(courseName);
 	}
 	
@@ -42,5 +49,15 @@ public class Course {
 
 	public int getCourseId() {
 		return courseId;
+	}
+	
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
+	}
+	
+	@Override
+	public String toString() {
+		return "Course [courseId=" + courseId + ", name=" + name + ", prefix=" + prefix + ", prefixNumber="
+				+ prefixNumber + "]";
 	}
 }

@@ -3,6 +3,7 @@ package dal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DbSqlite implements DbConnectionInt {
 	
@@ -10,7 +11,16 @@ public class DbSqlite implements DbConnectionInt {
 	
 	public DbSqlite(String urlStr) {
 		try {
-			this.connection = DriverManager.getConnection(urlStr);
+			String url = "jdbc:sqlite:test.db";
+//			should create .db file if it has not be already created
+			this.connection = DriverManager.getConnection(url);
+			
+//			this.connection = DriverManager.getConnection(urlStr);
+			
+//			String sqlCreateDB = "CREATE DATABASE recommendationLetterSimulator";
+//			Statement stmt = this.connection.createStatement();
+//			stmt.executeUpdate(sqlCreateDB);
+//			System.out.println("Database 'recommendationLetterSimulator' created successfully");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -20,7 +30,7 @@ public class DbSqlite implements DbConnectionInt {
 	@Override
 	public Connection getConnection() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.connection;
 	}
 
 	@Override

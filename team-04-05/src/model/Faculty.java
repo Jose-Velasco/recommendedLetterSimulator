@@ -21,6 +21,8 @@ public class Faculty {
 		this.setPhoneNumber(phoneNumber);
 		this.setCoursesTaught(new ArrayList<Course>());
 	}
+	
+	public Faculty() {}
 
 	public String getFullName() {
 		return fullName;
@@ -76,6 +78,13 @@ public class Faculty {
 
 	public void setCoursesTaught(List<Course> coursesTaught) {
 		this.coursesTaught = coursesTaught;
+	}
+	
+	@Override
+	public String toString() {
+		return "Faculty [fullName=" + fullName + ", title=" + title + ", schoolName=" + schoolName + ", department="
+				+ department + ", email=" + email + ", phoneNumber=" + phoneNumber + ", coursesTaught=" + coursesTaught
+				+ "]";
 	}
 	
 }
