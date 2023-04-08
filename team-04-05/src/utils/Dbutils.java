@@ -18,6 +18,18 @@ public class Dbutils {
 		return resultSet.next();
 	}
 	
+	/**
+	 * Example of what the Array list could looks like
+	 *	ArrayList<String> colAndTypes = new ArrayList<>();
+	 *	colAndTypes.add("id INTEGER PRIMARY KEY");
+	 *	colAndTypes.add("fullName TEXT");
+	 *	colAndTypes.add("title TEXT");
+	 *	colAndTypes.add("schoolName TEXT");
+	 * @param connection
+	 * @param tableName
+	 * @param tableColumnsAndTypes
+	 * @throws SQLException
+	 */
 	public void createTable(Connection connection, String tableName, List<String> tableColumnsAndTypes) throws SQLException {
 		Statement statement = connection.createStatement();
 		String sqlCreateCourseTable = String.format("CREATE TABLE %s (", tableName);
@@ -40,20 +52,31 @@ public class Dbutils {
 	}
 	
 	/**
-	 * Example prepare statement: INSERT INTO %s (name, prefix, prefixNumber) VALUES (?, ?, ?)
+	 * Example:
+	 * prepare statement: INSERT INTO %s (name, prefix, prefixNumber) VALUES (?, ?, ?)
+	 * 
+	 * Example:
+	 * String sqlInitalAcademicProgramQuery = String.format("INSERT INTO %s (name) VALUES (?)", tableName);
+	 * ArrayList<String> rowEntery = new ArrayList<>();
+	 * rowEntery.add("Master of science (MS)");
+	 * rowEntery.add("Master of business administration (MBA)");
+	 * rowEntery.add("Doctor of philosophy (PhD)");
+	 * ArrayList<ArrayList<String>> rowsEnteries = new ArrayList<>();
+	 * rowsEnteries.add(rowEntery);
 	 * 
 	 * @param preparedStatement
 	 * @param NumOfValuesPerRow number of values in the preparedStatement EX. (?, ?, ?) NumOfValuesPerRow would be 3
-	 * @param rowEntries values that will be inserted into row
+	 * @param rowEntries values that will be inserted into row, each nested list is a row
 	 * @throws SQLException
 	 */
-	public void insertDefaultStringOnlyGivenTableData(PreparedStatement preparedStatement, int NumOfValuesPerRow, ArrayList<ArrayList<String>> rowEntries) throws SQLException {
+	public void insertDefaultStringOnlyGivenTableData(PreparedStatement preparedStatement, ArrayList<ArrayList<String>> rowEntries) throws SQLException {
+		int numOfValuesPerRow = rowEntries.get(0).size();
 		for (ArrayList<String>  row : rowEntries) {
-			for (int i = 1; i <= NumOfValuesPerRow; i++) {
+			for (int i = 1; i <= numOfValuesPerRow; i++) {
 				preparedStatement.setString(i, row.get(i - 1));
 				preparedStatement.executeUpdate();
 			}
 		}
-		System.out.println("inital/default Data inserted successfully, NumOfValuesPerRow = " + NumOfValuesPerRow);
+		System.out.println("inital/default Data inserted successfully, NumOfValuesPerRow = " + numOfValuesPerRow);
 	}
 }

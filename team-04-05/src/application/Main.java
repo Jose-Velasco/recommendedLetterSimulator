@@ -2,20 +2,24 @@ package application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.AcademicCharacteristic;
+import model.AcademicProgram;
 import model.Course;
 import model.Faculty;
-import utils.Dbutils;
+import model.PersonalCharacteristic;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+import dal.AcademicProgramDAOImpl;
 import dal.CourseDAOImpl;
 import dal.DbSqlite;
 import dal.FacultyDAOImpl;
+import dal.PersonalCharacteristicDAOImpl;
+import dal.AcademicCharacteristicDAOImpl;
 
 public class Main extends Application {
 	@Override
@@ -39,14 +43,13 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 //		TODO:
-//		Program names
-//		personal characteristics
-//		academic characteristics
-//		
+//		USER
+//		Integrate with new repo's main
 		
 		DbSqlite db = new DbSqlite("");
 		FacultyDAOImpl facultyDAO = new FacultyDAOImpl(db.getConnection(), "faculty");
 		CourseDAOImpl courseDAO = new CourseDAOImpl(db.getConnection(), "course");
+		AcademicProgramDAOImpl academicProgramDAO = new AcademicProgramDAOImpl(db.getConnection(), "academicProgram");
 		
 		try {
 			
@@ -62,19 +65,28 @@ public class Main extends Application {
 				System.out.println(course.toString());
 			}
 			
-//			Testing DbUtils
-			System.out.println("### Testing DbUtils ###");
-			Dbutils dbUtils = new Dbutils();
-			ArrayList<String> colAndTypes = new ArrayList<>();
-			colAndTypes.add("id INTEGER PRIMARY KEY");
-			colAndTypes.add("fullName TEXT");
-			colAndTypes.add("title TEXT");
-			colAndTypes.add("schoolName TEXT");
-			colAndTypes.add("department TEXT");
-			colAndTypes.add("email TEXT");
-			colAndTypes.add("phoneNumber TEXT");
+//			testing AcademicProgram stuff
+			System.out.println("### AcademicProgram TEST ###");
+			List<AcademicProgram> SavedInDBAcademicProgram = academicProgramDAO.getAllAcademicPrograms();
+			for (AcademicProgram course : SavedInDBAcademicProgram) {
+				System.out.println(course.toString());
+			}
 			
-			dbUtils.createCourseTable(db.getConnection(), "course", colAndTypes);
+//			testing PersonalCharacteristic stuff
+			System.out.println("### PersonalCharacteristic TEST ###");
+			PersonalCharacteristicDAOImpl personalCharacteristicDAO = new PersonalCharacteristicDAOImpl(db.getConnection(), "personalCharacteristic");
+			List<PersonalCharacteristic> SavedInDBPersonalCharacteristic = personalCharacteristicDAO.getAllPersonalCharacteristics();
+			for (PersonalCharacteristic personalCharacteristic : SavedInDBPersonalCharacteristic) {
+				System.out.println(personalCharacteristic.toString());
+			}
+			
+//			testing AcademicCharacteristic stuff
+			System.out.println("### AcademicCharacteristic TEST ###");
+			AcademicCharacteristicDAOImpl academicCharacteristicDAO = new AcademicCharacteristicDAOImpl(db.getConnection(), "academicCharacteristic");
+			List<AcademicCharacteristic> SavedInDBAcademicCharacteristic = academicCharacteristicDAO.getAllAcademicCharacteristics();
+			for (AcademicCharacteristic academicCharacteristic : SavedInDBAcademicCharacteristic) {
+				System.out.println(academicCharacteristic.toString());
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
